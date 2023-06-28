@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,9 +20,17 @@ public class Author {
     private String name;
 
     @OneToMany(
-            mappedBy = "authors",
+            mappedBy = "author",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Quote> quotes;
+
+    public void addQuote(Quote quote) {
+        if (quotes == null) {
+            quotes = new ArrayList<>();
+        }
+        quotes.add(quote);
+        this.setQuotes(quotes);
+    }
 }
